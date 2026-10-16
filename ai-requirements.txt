@@ -1,0 +1,4 @@
+# Optional semantic matching dependencies. Install after requirements.txt.
+sentence-transformers>=2.6
+faiss-cpu>=1.8
+numpy>=1.26
