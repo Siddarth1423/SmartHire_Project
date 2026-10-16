@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Application submitted — SmartHire{% endblock %}
+{% block content %}
+<section class="success card">
+  <div class="success-icon">✓</div><p class="eyebrow">APPLICATION RECEIVED</p><h1>You're on your way.</h1>
+  <p>Your application was saved successfully. Your initial resume-to-job similarity score is:</p>
+  <div class="score">{{ "%.1f"|format(score) }}<small>/ 100</small></div>
+  <p class="muted">This score is a rough similarity signal, not a prediction of hiring success.</p>
+  <a class="button" href="/">Browse more jobs</a>
+</section>
+{% endblock %}

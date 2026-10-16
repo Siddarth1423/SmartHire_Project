@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}SmartHire — Find your next role{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">CAREERS, MATCHED SMARTER</p>
+  <h1>Find work that fits<br><span>your skills.</span></h1>
+  <p class="hero-copy">Explore opportunities and get a resume-to-role similarity score when you apply.</p>
+  <form class="search" method="get" action="/"><input name="q" value="{{ q }}" placeholder="Search title, company, skills…"><button>Search jobs</button></form>
+</section>
+<div class="section-heading"><div><p class="eyebrow">OPEN OPPORTUNITIES</p><h2>Latest jobs</h2></div><span class="count">{{ jobs|length }} roles</span></div>
+<div class="job-grid">
+{% for job in jobs %}
+<article class="card job-card">
+  <div class="company-mark">{{ job.company[:1]|upper }}</div>
+  <p class="company">{{ job.company }}</p><h3>{{ job.title }}</h3>
+  <p class="muted">⌖ {{ job.location }}</p>
+  <p class="description">{{ job.description[:155] }}{% if job.description|length > 155 %}…{% endif %}</p>
+  <div class="tags">{% for skill in job.skills.split(',')[:4] %}<span>{{ skill.strip() }}</span>{% endfor %}</div>
+  <a class="button secondary full" href="/jobs/{{ job.id }}">View role & apply →</a>
+</article>
+{% else %}
+<div class="empty card">No jobs found. Try a different search or add a job from the recruiter dashboard.</div>
+{% endfor %}
+</div>
+{% endblock %}

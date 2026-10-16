@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} — SmartHire{% endblock %}
+{% block content %}
+<a class="back" href="/">← All jobs</a>
+<div class="detail-layout">
+<section class="card detail-card">
+  <p class="eyebrow">{{ job.company }}</p><h1>{{ job.title }}</h1><p class="muted">⌖ {{ job.location }}</p>
+  <h3>About the role</h3><p class="long-copy">{{ job.description }}</p>
+  <h3>Skills</h3><div class="tags">{% for skill in job.skills.split(',') %}<span>{{ skill.strip() }}</span>{% endfor %}</div>
+  <div class="notice">Your resume is parsed locally by the application. The matching score is an estimate, not a hiring decision.</div>
+</section>
+<section class="card form-card">
+  <p class="eyebrow">TAKE THE NEXT STEP</p><h2>Apply for this role</h2>
+  <form method="post" action="/jobs/{{ job.id }}/apply" enctype="multipart/form-data" class="stack">
+    <label>Full name<input required name="candidate_name" placeholder="Your name"></label>
+    <label>Email address<input required type="email" name="candidate_email" placeholder="you@example.com"></label>
+    <label>Resume <small>PDF or TXT, max 5 MB</small><input required type="file" name="resume" accept=".pdf,.txt"></label>
+    <label>Cover letter <small>Optional</small><textarea name="cover_letter" rows="4" placeholder="Tell us why you're a good fit…"></textarea></label>
+    <button class="full">Submit application</button>
+  </form>
+</section>
+</div>
+{% endblock %}

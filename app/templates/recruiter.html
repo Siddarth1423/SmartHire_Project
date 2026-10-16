@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Recruiter dashboard — SmartHire{% endblock %}
+{% block content %}
+<div class="section-heading"><div><p class="eyebrow">RECRUITER WORKSPACE</p><h1>Manage opportunities</h1></div><span class="count">{{ jobs|length }} jobs</span></div>
+<div class="recruiter-layout">
+<section class="card form-card">
+  <p class="eyebrow">CREATE A ROLE</p><h2>Post a new job</h2>
+  <form method="post" action="/recruiter/jobs" class="stack">
+    <label>Job title<input required name="title" placeholder="Python Developer"></label>
+    <label>Company<input required name="company" placeholder="Company name"></label>
+    <label>Location<input name="location" placeholder="Bengaluru / Remote"></label>
+    <label>Description<textarea required name="description" rows="5" placeholder="Responsibilities and requirements…"></textarea></label>
+    <label>Skills <small>Comma-separated</small><input name="skills" placeholder="Python, FastAPI, SQL, Docker"></label>
+    <button class="full">Publish job</button>
+  </form>
+</section>
+<section class="jobs-admin">
+{% for job in jobs %}
+<article class="card admin-card">
+  <div class="admin-title"><div><p class="company">{{ job.company }} · {{ job.location }}</p><h3>{{ job.title }}</h3></div><span class="count">{{ job.applications|length }} applicants</span></div>
+  {% if job.applications %}
+  <div class="table-wrap"><table><thead><tr><th>Candidate</th><th>Match</th><th>Status</th><th>Update</th></tr></thead><tbody>
+  {% for application in job.applications|sort(attribute='created_at', reverse=true) %}
+  <tr><td><strong>{{ application.candidate_name }}</strong><small>{{ application.candidate_email }}</small></td><td><span class="score-pill">{{ "%.1f"|format(application.match_score) }}%</span></td><td>{{ application.status }}</td><td><form class="status-form" method="post" action="/recruiter/applications/{{ application.id }}/status"><select name="status">{% for s in ["Applied","Shortlisted","Interview","Rejected","Hired"] %}<option {% if application.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select><button class="mini-button">Save</button></form></td></tr>
+  {% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="muted">No applications yet for this role.</p>{% endif %}
+</article>
+{% else %}<div class="card empty">No roles yet. Create your first job using the form.</div>{% endfor %}
+</section>
+</div>
+{% endblock %}

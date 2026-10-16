@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SmartHire{% endblock %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">Smart<span>Hire</span></a>
+  <nav><a href="/">Find jobs</a><a href="/recruiter">Recruiter dashboard</a><a href="/docs">API docs</a></nav>
+</header>
+<main class="container">{% block content %}{% endblock %}</main>
+<footer>SmartHire · Recruitment demo built with FastAPI</footer>
+</body>
+</html>
